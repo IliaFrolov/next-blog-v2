@@ -3,7 +3,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { RiMenuFoldFill, RiMenuUnfoldFill } from "react-icons/ri";
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 interface Props {
   navItems: { label: string; icon: IconType; href: string }[];

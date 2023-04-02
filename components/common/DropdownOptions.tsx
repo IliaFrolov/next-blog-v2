@@ -1,11 +1,15 @@
 import { FC, ReactNode, useState } from "react";
 
-interface Props {
-  options: { label: string; onClick(): void }[];
+export type Options = { label: string; onClick(): void }[];
+interface DropdownOptionsProps {
+  options: Options;
   head: ReactNode;
 }
 
-const DropdownOptions: FC<Props> = ({ head, options }): JSX.Element => {
+const DropdownOptions: FC<DropdownOptionsProps> = ({
+  head,
+  options,
+}): JSX.Element => {
   const [showOptions, setShowOptions] = useState(false);
 
   return (

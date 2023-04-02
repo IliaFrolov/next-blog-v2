@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import AdminLayout from "../../components/layout/AdminLayout";
+import AdminLayout from "@components/layout/AdminLayout";
 
 interface Props {}
 

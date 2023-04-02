@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import InfiniteScrollPosts from "@components/common/InfinitiScrollPosts";
-import DefaultLayout from "@components/layout/DefaultLayout";
-import type {
-  NextPage,
+import {
   GetServerSideProps,
   InferGetServerSidePropsType,
+  NextPage,
 } from "next";
+import { useState } from "react";
+import AdminLayout from "@components/layout/AdminLayout";
 import { PostDetails } from "utils/types";
 import { formatPosts, readPostFromDb } from "@lib/utils";
+import InfiniteScrollPosts from "@components/common/InfinitiScrollPosts";
 import axios from "axios";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 let pageNo = 0;
 const limit = 9;
-const Home: NextPage<Props> = ({ posts }) => {
+
+const Posts: NextPage<Props> = ({ posts }) => {
   const [postToRender, setPostsToRender] = useState(posts);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const isAdmin = false;
+
   const fetchMorePosts = async () => {
     try {
       pageNo++;
@@ -34,15 +35,15 @@ const Home: NextPage<Props> = ({ posts }) => {
     }
   };
   return (
-    <DefaultLayout className="pb-20 ">
+    <AdminLayout className="p-3">
       <InfiniteScrollPosts
         posts={postToRender}
         dataLength={postToRender.length}
         hasMore={hasMorePosts}
         next={fetchMorePosts}
-        showControls={isAdmin}
+        showControls
       />
-    </DefaultLayout>
+    </AdminLayout>
   );
 };
 interface ServerSideResponse {
@@ -60,4 +61,5 @@ export const getServerSideProps: GetServerSideProps<
     return { notFound: true };
   }
 };
-export default Home;
+
+export default Posts;

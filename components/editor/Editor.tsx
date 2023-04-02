@@ -16,9 +16,10 @@ import ActionButton from "../common/ActionButton";
 import ThumbnailSelector from "./ThumbnailSelector";
 
 export interface FinalPost extends SeoResult {
+  id?: string;
   title: string;
   content: string;
-  thumbnail?: File | string;
+  thumbnail?: File | string | null;
 }
 
 interface Props {
