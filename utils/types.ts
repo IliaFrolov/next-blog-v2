@@ -7,3 +7,11 @@ export interface PostDetails {
     thumbnail?: string | null;
     createdAt: string;
 }
+
+export interface UserProfile {
+    id: string;
+    email: string;
+    name: string;
+    avatar: string | undefined;
+    role: "user" | "admin";
+}
