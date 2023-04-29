@@ -1,7 +1,7 @@
 import formidable from "formidable";
 import { NextApiRequest } from "next";
 import dbConnect from "./dbConnect";
-import Post, { PostModelSchema } from "@models/Post";
+import Post, { PostModelSchema, PostModelSchemaWithId } from "@models/Post";
 import { PostDetails } from "utils/types";
 
 interface FormidablePromise<T> {
@@ -32,14 +32,19 @@ export const readPostFromDb = async (limit: number, pageNo: number) => {
     .limit(limit)
 }
 
-export const formatPosts = (posts: PostModelSchema[]): PostDetails[] => {
-  return posts.map(({ title, slug, thumbnail, createdAt, tags, meta }) => ({
-    thumbnail: thumbnail?.url || null,
-    createdAt: createdAt.toString(),
-    title,
-    slug,
-    tags,
-    meta,
-  }))
+export const formatPost = ({ _id, content, title, slug, thumbnail, createdAt, tags, meta }: PostModelSchemaWithId, short?: boolean): PostDetails => ({
+  id: _id.toString(),
+  thumbnail: thumbnail?.url || null,
+  createdAt: createdAt.toString(),
+  title,
+  slug,
+  content: short ? null : content,
+  tags,
+  meta,
+})
+
+
+export const formatPosts = (posts: PostModelSchemaWithId[]): PostDetails[] => {
+  return posts.map((post) => formatPost(post, true))
 
 };

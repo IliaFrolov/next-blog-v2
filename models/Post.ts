@@ -1,5 +1,8 @@
-import { Schema, models, model, ObjectId, Model } from "mongoose";
+import { Schema, models, model, ObjectId, Model, Types } from "mongoose";
 
+export interface PostModelSchemaWithId extends PostModelSchema {
+  _id: Types.ObjectId;
+}
 export interface PostModelSchema {
   title: string;
   slug: string;

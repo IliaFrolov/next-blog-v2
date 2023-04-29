@@ -72,6 +72,7 @@ const AdminNav: FC<Props> = ({ navItems }): JSX.Element => {
           {navItems.map((item) => {
             return (
               <Link
+                title={item.label}
                 key={item.href}
                 href={item.href}
                 className="flex items-center text-highlight-light dark:text-highlight-dark text-xl p-3 hover:scale-[0.98] transition"

@@ -12,6 +12,7 @@ import {
 import AdminNav from "@components/common/nav/AdminNav";
 import AppHead from "@components/common/AppHead";
 import cn from "classnames";
+import AdminSecondaryNav from "@components/common/nav/AdminSecondaryNav";
 
 interface Props {
   children: ReactNode;
@@ -37,10 +38,12 @@ const AdminLayout: FC<Props> = ({
       <AppHead title={title} />
       <div className="flex ">
         <AdminNav navItems={navItems} />
-        <div className="flex-1 p-4">
-          <div className={cn("max-w-4xl mx-auto", className)}>{children}</div>
+        <div className="flex-1 p-4 dark:bg-primary-dark bg-primary transition">
+          <AdminSecondaryNav />
+          <div className={cn("max-w-4xl mx-auto", className)}>
+            {children}
+          </div>
         </div>
-        {/* create button */}
         <Link
           href="/admin/posts/create"
           className="bg-secondary-dark dark:bg-secondary-light text-primary dark:text-primary-dark fixed z-10 right-10 bottom-10 p-3 rounded-full hover:scale-90 shadow-sm transition"

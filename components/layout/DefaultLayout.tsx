@@ -21,12 +21,12 @@ const DefaultLayout: FC<DefaultLayoutProps> = ({
       <AppHead title={title} desc={desc} />
       <div
         className={cn(
-          "min-h-screen bg-primary dark:bg-primary-dark transition ",
+          "min-h-screen bg-primary dark:bg-primary-dark transition",
           className
         )}
       >
         <UserNav />
-        <div className="max-w-4xl mx-auto pt-20">{children}</div>
+        <div className="max-w-4xl mx-auto pt-20 pb-20">{children}</div>
       </div>
     </>
   );

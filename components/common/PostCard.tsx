@@ -36,7 +36,7 @@ const PostCard: FC<PostCardProps> = ({
               No image
             </div>
           ) : (
-            <Image alt="cover" src={thumbnail} fill />
+            <Image alt="cover" className="object-cover object-top" src={thumbnail} fill />
           )}
         </div>
         <div className="p-2 flex-1 flex-col">

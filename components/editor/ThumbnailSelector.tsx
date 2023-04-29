@@ -7,7 +7,7 @@ interface Props {
 }
 
 const commonClass =
-  "border border-dashed border-secondary-dark flex items-center justify-center rounded cursor-pointer aspect-video";
+  "border border-dashed border-secondary-dark flex items-center justify-center rounded cursor-pointer aspect-video dark:text-primary text-primary-dark transition";
 
 const ThumbnailSelector: FC<Props> = ({
   initialValue,
@@ -44,7 +44,7 @@ const ThumbnailSelector: FC<Props> = ({
             className={classNames(commonClass, "object-cover")}
           />
         ) : (
-          <PosterUI label="Thumbnail" />
+          <PosterUI label="Thumbnail" className={commonClass} />
         )}
       </label>
     </div>

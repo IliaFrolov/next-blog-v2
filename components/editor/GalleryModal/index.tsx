@@ -91,8 +91,8 @@ const GalleryModal: FC<Props> = ({
 
                   <ActionButton onClick={handleSelection} title="Select" />
 
-                  <div className="relative aspect-video bg-png-pattern">
-                    <Image alt="" src={selectedImage} fill />
+                  <div className="relative aspect-auto bg-png-pattern">
+                    <Image alt="" src={selectedImage} width={100} height={100} className="w-full" />
                   </div>
                 </>
               ) : null}

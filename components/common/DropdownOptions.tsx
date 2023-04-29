@@ -1,8 +1,8 @@
 import { FC, ReactNode, useState } from "react";
 
-export type Options = { label: string; onClick(): void }[];
+export type DdOptions = { label: string; onClick(): void }[];
 interface DropdownOptionsProps {
-  options: Options;
+  options: DdOptions;
   head: ReactNode;
 }
 
@@ -20,11 +20,11 @@ const DropdownOptions: FC<DropdownOptionsProps> = ({
     >
       {head}
       {showOptions && (
-        <div className="min-w-max absolute top-full mt-4 right-2 z-10 border-2 border-primary-dark dark:border-primary rounded text-left bg-primary dark:bg-primary-dark">
+        <div className="min-w-max absolute top-full mt-4 right-2 z-40 border-2 border-primary-dark dark:border-primary rounded text-left bg-primary dark:bg-primary-dark">
           <ul className="p-3 space-y-3">
             {options.map(({ label, onClick }, index) => {
               return (
-                <li key={label + index} onMouseDown={onClick}>
+                <li key={label + index} onMouseDown={onClick} className="text-primary-dark dark:text-primary hover:opacity-75">
                   {label}
                 </li>
               );

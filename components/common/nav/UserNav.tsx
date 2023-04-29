@@ -5,13 +5,14 @@ import { APP_NAME } from "../AppHead";
 import { HiLightBulb } from "react-icons/Hi";
 import { GitHubButton } from "@components/buttons";
 import ProfileHead from "../ProfileHead";
-import DropdownOptions, { Options } from "../DropdownOptions";
+import DropdownOptions, { DdOptions } from "../DropdownOptions";
 import { useSession, signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { UserProfile } from "utils/types";
+import useDarkMode from "hooks/useDarkMode";
 
-interface UserNavProps {}
-const defaultOptions: Options = [
+interface UserNavProps { }
+const defaultOptions: DdOptions = [
   {
     label: "Logout",
     async onClick() {
@@ -19,8 +20,9 @@ const defaultOptions: Options = [
     },
   },
 ];
-const UserNav: FC<UserNavProps> = ({}) => {
+const UserNav: FC<UserNavProps> = ({ }) => {
   const router = useRouter();
+  const { toggleTheme } = useDarkMode();
   const { data, status } = useSession();
   const isAuth = status === "authenticated" && !!data;
   const profile = data?.user as UserProfile | undefined;
@@ -30,14 +32,14 @@ const UserNav: FC<UserNavProps> = ({}) => {
   }
   const dropDownOptions = isAdmin
     ? [
-        {
-          label: "Dashboard",
-          onClick() {
-            router.push("/admin");
-          },
+      {
+        label: "Dashboard",
+        onClick() {
+          router.push("/admin");
         },
-        ...defaultOptions,
-      ]
+      },
+      ...defaultOptions,
+    ]
     : defaultOptions;
 
   const handleLoginWithGitHub = async () => {
@@ -52,7 +54,7 @@ const UserNav: FC<UserNavProps> = ({}) => {
         </div>
       </Link>
       <div className="flex items-center space-x-5">
-        <button className="dark:text-secondary-dark text-secondary-light">
+        <button className="dark:text-secondary-dark text-secondary-light" onClick={toggleTheme}>
           <HiLightBulb size={34} className="" />
         </button>
         {isAuth ? (

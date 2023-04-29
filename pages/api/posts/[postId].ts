@@ -62,9 +62,11 @@ const updatePost: NextApiHandler = async (req, res) => {
 
         const thumbnail = files.thumbnail as formidable.File;
         if (thumbnail) {
-            const { secure_url: url, public_id } = await cloudinary.uploader.upload(thumbnail.filepath, {
+            const { secure_url: url, public_id, ...rest } = await cloudinary.uploader.upload(thumbnail.filepath, {
                 folder: process.env.CLOUD_FOLDER_NAME,
             });
+            console.log({ rest });
+
             const publicId = post.thumbnail?.public_id;
             if (publicId) {
                 await cloudinary.uploader.destroy(publicId)

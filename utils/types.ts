@@ -1,8 +1,9 @@
 export interface PostDetails {
+    id: string;
     title: string;
     slug: string;
     meta: string;
-    content?: string;
+    content: string | null;
     tags: string[];
     thumbnail?: string | null;
     createdAt: string;
