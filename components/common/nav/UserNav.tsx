@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 import Logo from "../Logo";
 import { APP_NAME } from "../AppHead";
-import { HiLightBulb } from "react-icons/Hi";
+import { HiLightBulb } from "react-icons/hi";
 import { GitHubButton } from "@components/buttons";
 import ProfileHead from "../ProfileHead";
 import DropdownOptions, { DdOptions } from "../DropdownOptions";
