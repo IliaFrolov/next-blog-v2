@@ -1,20 +1,5 @@
 import { FC } from "react";
-const handler: NextApiHandler = (req, res) => {
-  const { method } = req;
 
-  switch (method) {
-    case "POST":
-      return req, res;
-    case "GET":
-      return req, res;
-    case "UPDATE":
-      return req, res;
-    case "DELETE":
-      return req, res;
-    default:
-      return res.status(404).send("Not found!");
-  }
-};
 interface Props {
   className?: string;
 }

@@ -22,7 +22,7 @@ const ModalContainer: FC<Props> = ({
   onClose,
 }): JSX.Element | null => {
   const containerId = useId();
-  const handleClose = useCallback(() => onClose && onClose(), [onClose]);
+  const handleClose = useCallback(() => onClose?.(), [onClose]);
 
   const handleClick = ({ target }: any) => {
     if (target.id === containerId) handleClose();
@@ -42,7 +42,9 @@ const ModalContainer: FC<Props> = ({
       onClick={handleClick}
       className="fixed inset-0 bg-primary dark:bg-primary-dark dark:bg-opacity-5 bg-opacity-5 backdrop-blur-[2px] z-50 flex items-center justify-center"
     >
-      {children}
+      <dialog open={visible} className="rounded dark:bg-primary bg-primary-dark p-5">
+        {children}
+      </dialog>
     </div>
   );
 };

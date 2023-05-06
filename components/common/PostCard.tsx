@@ -65,8 +65,8 @@ const PostCard: FC<PostCardProps> = ({
             <span className="animate-pulse">Removing...</span>
           ) : (
             <>
-              <Button href={`/admin/posts/update/${slug}`}>Edit</Button>
-              <Button onClick={onDeleteClick}>Delete</Button>
+              <Button<React.HTMLProps<HTMLAnchorElement>> href={`/admin/posts/update/${slug}`}>Edit</Button>
+              <Button<React.HTMLProps<HTMLButtonElement>> onClick={onDeleteClick}>Delete</Button>
             </>
           )}
         </div>

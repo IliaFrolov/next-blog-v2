@@ -169,7 +169,7 @@ const Editor: FC<Props> = ({
           {/* Title Input */}
           <input
             type="text"
-            className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-primary mb-3"
+            className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-4xl font-semibold text-primary-dark dark:text-primary mb-3"
             placeholder="Title"
             onChange={updateTitle}
             value={post.title}

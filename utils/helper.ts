@@ -1,4 +1,5 @@
 import { FinalPost } from "@components/editor";
+import { PostDetails } from "./types";
 
 export const generateFormData = (post: FinalPost) => {
     const formData = new FormData();
@@ -10,4 +11,8 @@ export const generateFormData = (post: FinalPost) => {
         } else formData.append(key, value);
     }
     return formData
+}
+
+export const filterPostsById = (posts: PostDetails[], postToFilter: string) => {
+    return posts.filter((p) => p.id !== postToFilter);
 }

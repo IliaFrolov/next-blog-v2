@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Image from "next/image";
 import { ChangeEventHandler, FC, useEffect, useState } from "react";
 
 interface Props {
@@ -38,7 +39,8 @@ const ThumbnailSelector: FC<Props> = ({
       />
       <label htmlFor="thumbnail">
         {selectedThumbnail ? (
-          <img
+          <Image
+            width={10000} height={10000}
             src={selectedThumbnail}
             alt=""
             className={classNames(commonClass, "object-cover")}

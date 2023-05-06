@@ -1,11 +1,15 @@
 import { NextApiHandler } from 'next';
 import dbConnect from '@lib/dbConnect';
 import { postValidationSchema, validateSchema } from '@lib/validator';
-import { formatPosts, readFile, readPostFromDb } from '@lib/utils';
+import { checkAuthorization, formatPosts, isAdmin, readFile, readPostFromDb } from '@lib/utils';
 import Post from '@models/Post';
 import formidable from 'formidable';
 import cloudinary from '@lib/cloudinary';
 import { FinalPost } from '@components/editor';
+import { getServerSession } from 'next-auth';
+import { options } from 'joi';
+import { authOptions } from '../auth/[...nextauth]';
+import { UserProfile } from 'utils/types';
 
 export const config = {
     api: { bodyParser: false },
@@ -19,16 +23,13 @@ const handler: NextApiHandler = (req, res) => {
             return getPosts(req, res);
         case 'POST':
             return createPost(req, res);
-        case 'PATCH':
-            return updatePost(req, res);
-        case 'DELETE':
-            return deletePost(req, res);
         default:
             return res.status(404).send('Not found!');
     }
 };
 
 const createPost: NextApiHandler = async (req, res) => {
+    await checkAuthorization(req, res);
 
     const { files, body } = await readFile<FinalPost>(req);
 
@@ -62,31 +63,18 @@ const createPost: NextApiHandler = async (req, res) => {
 };
 
 const getPosts: NextApiHandler = async (req, res) => {
-    const { limit, pageNo } = req.query as { limit: string, pageNo: string }
+    const { limit, pageNo, skip } = req.query as { limit: string, pageNo: string, skip: string }
     try {
-        const posts = await readPostFromDb(parseInt(limit), parseInt(pageNo))
+        const posts = await readPostFromDb(
+            parseInt(limit),
+            parseInt(pageNo),
+            parseInt(skip)
+        )
         res.json({ posts: formatPosts(posts) });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 };
 
-const updatePost: NextApiHandler = async (req, res) => {
-    try {
-        await dbConnect()
-        res.json({ status: 200 });
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-const deletePost: NextApiHandler = async (req, res) => {
-    try {
-
-        res.json({ status: 200 });
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-};
 
 export default handler;

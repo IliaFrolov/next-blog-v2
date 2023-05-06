@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import formidable from "formidable";
 import cloudinary from "../../lib/cloudinary";
-import { readFile } from "../../lib/utils";
+import { checkAuthorization, readFile } from "../../lib/utils";
 
 export const config = {
   api: { bodyParser: false },
@@ -22,6 +22,8 @@ const handler: NextApiHandler = (req, res) => {
 
 const uploadNewImage: NextApiHandler = async (req, res) => {
   try {
+    await checkAuthorization(req, res);
+
     const { files } = await readFile(req);
     const imageFile = files.image as formidable.File;
     const { secure_url: url } = await cloudinary.uploader.upload(
@@ -39,6 +41,8 @@ const uploadNewImage: NextApiHandler = async (req, res) => {
 
 const readAllImages: NextApiHandler = async (req, res) => {
   try {
+    await checkAuthorization(req, res);
+
     const { resources } = await cloudinary.api.resources({
       resource_type: "image",
       type: "upload",

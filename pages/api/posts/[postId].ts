@@ -1,7 +1,7 @@
 import { FinalPost } from '@components/editor';
 import cloudinary from '@lib/cloudinary';
 import dbConnect from '@lib/dbConnect';
-import { readFile } from '@lib/utils';
+import { checkAuthorization, readFile } from '@lib/utils';
 import { postValidationSchema, validateSchema } from '@lib/validator';
 import Post from '@models/Post';
 import formidable from 'formidable';
@@ -28,8 +28,10 @@ const handler: NextApiHandler = (req, res) => {
 
 const getPost: NextApiHandler = async (req, res) => {
     try {
-
-        res.json();
+        const postId = req.query.postId as string;
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ error: "Post not found!" })
+        res.json({ post: post })
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
@@ -37,6 +39,8 @@ const getPost: NextApiHandler = async (req, res) => {
 
 const updatePost: NextApiHandler = async (req, res) => {
     try {
+        await checkAuthorization(req, res);
+
         const postId = req.query.postId as string;
         await dbConnect()
         const post = await Post.findById(postId);
@@ -86,10 +90,19 @@ const updatePost: NextApiHandler = async (req, res) => {
 
 const deletePost: NextApiHandler = async (req, res) => {
     try {
+        await checkAuthorization(req, res);
 
-        res.json();
+        const postId = req.query.postId as string;
+        const post = await Post.findByIdAndDelete(postId);
+        if (!post) return res.status(404).json({ error: "Post not found!" })
+        const publicId = post.thumbnail?.public_id;
+        if (publicId) {
+            await cloudinary.uploader.destroy(publicId);
+        }
+        res.json({ removed: true })
+
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error?.message });
     }
 };
 

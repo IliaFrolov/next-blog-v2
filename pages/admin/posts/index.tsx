@@ -7,8 +7,9 @@ import { useState } from "react";
 import AdminLayout from "@components/layout/AdminLayout";
 import { PostDetails } from "utils/types";
 import { formatPosts, readPostFromDb } from "@lib/utils";
-import InfiniteScrollPosts from "@components/common/InfinitiScrollPosts";
+import InfiniteScrollPosts from "@components/common/InfiniteScrollPosts";
 import axios from "axios";
+import { filterPostsById } from "utils/helper";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -17,13 +18,14 @@ const limit = 9;
 
 const Posts: NextPage<Props> = ({ posts }) => {
   const [postToRender, setPostsToRender] = useState(posts);
-  const [hasMorePosts, setHasMorePosts] = useState(true);
+  const [hasMorePosts, setHasMorePosts] = useState(posts.length >= limit);
 
   const fetchMorePosts = async () => {
     try {
       pageNo++;
       const { data } = await axios.get(
-        `/api/posts?limit=${limit}&pageNo=${pageNo}`
+        `/api/posts?limit=${limit}&skip=${postToRender.length}`
+
       );
       setPostsToRender([...postToRender, ...data.posts]);
       if (data.posts.length < limit) {
@@ -42,6 +44,9 @@ const Posts: NextPage<Props> = ({ posts }) => {
         hasMore={hasMorePosts}
         next={fetchMorePosts}
         showControls
+        onPostRefresh={(postId) => {
+          setPostsToRender(filterPostsById(postToRender, postId))
+        }}
       />
     </AdminLayout>
   );

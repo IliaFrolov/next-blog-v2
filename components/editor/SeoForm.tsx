@@ -34,8 +34,14 @@ const SEOForm: FC<Props> = ({
     onChange(newValues);
   };
 
+  const makeSlug = (title: string) => {
+    // return slugify(title.toLowerCase(), { remove: /[\[\]\/*+~.;?%&*{}()'"!:@]/g });
+    return slugify(title.toLowerCase(), { strict: true });
+
+  }
+
   useEffect(() => {
-    const slug = slugify(title.toLowerCase());
+    const slug = makeSlug(title);
     const newValues = { ...values, slug };
     setValues(newValues);
     onChange(newValues);
@@ -43,7 +49,7 @@ const SEOForm: FC<Props> = ({
 
   useEffect(() => {
     if (initialValue) {
-      setValues({ ...initialValue, slug: slugify(initialValue.slug) });
+      setValues({ ...initialValue, slug: makeSlug(initialValue.slug) });
     }
   }, [initialValue]);
 
