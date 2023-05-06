@@ -3,6 +3,7 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import { useState } from 'react'
 import { FinalPost } from "@components/editor";
 import dbConnect from "@lib/dbConnect";
 import Post from "@models/Post";
@@ -19,8 +20,10 @@ interface PostResponse extends FinalPost {
 type UpdatePostProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const UpdatePost: NextPage<UpdatePostProps> = ({ post }) => {
+  const [updating, setUpdating] = useState(false);
   const router = useRouter();
   const handleSubmit = async (post: FinalPost) => {
+    setUpdating(true);
     try {
       const { data } = await axios.patch(
         `/api/posts/${post.id}`,
@@ -32,10 +35,11 @@ const UpdatePost: NextPage<UpdatePostProps> = ({ post }) => {
     } catch (error: any) {
       console.error(error.response.data);
     }
+    setUpdating(false);
   };
   return (
     <AdminLayout title="Update post">
-      <Editor initialValue={post} onSubmit={handleSubmit} btnTitle="Update" />
+      <Editor initialValue={post} onSubmit={handleSubmit} btnTitle="Update" busy={updating} />
     </AdminLayout>
   );
 };
