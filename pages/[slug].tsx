@@ -59,7 +59,8 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
         return {
             props: {
                 post: formatPost(post)
-            }
+            },
+            revalidate: 60
         }
     } catch (error) {
         return { notFound: true };
