@@ -150,7 +150,7 @@ const Editor: FC<Props> = ({
   return (
     <>
       <div className="p-3 dark:bg-primary-dark bg-primary transition">
-        <div className="sticky top-0 z-10">
+        <div className="sticky top-0 z-10 backdrop-blur-md">
           {/* Thumbnail Selector and Submit Button */}
           <div className="flex items-center justify-between mb-3">
             <ThumbnailSelector
