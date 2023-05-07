@@ -8,10 +8,10 @@ import nProgress from 'nprogress';
 interface MyAppProps {
   session?: Session | null;
 }
-// nProgress.configure({ showSpinner: false });
-// Router.events.on('routeChangeStart', () => { nProgress.start() })
-// Router.events.on('routeChangeComplete', () => { nProgress.done() })
-// Router.events.on('routeChangeError', () => { nProgress.done() })
+nProgress.configure({ showSpinner: false });
+Router.events.on('routeChangeStart', () => { nProgress.start() })
+Router.events.on('routeChangeComplete', () => { nProgress.done() })
+Router.events.on('routeChangeError', () => { nProgress.done() })
 
 
 function MyApp({
